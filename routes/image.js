@@ -40,7 +40,7 @@ app.post('/uploadProfileImage',upload.single('image'), (req,res) =>{
                   status:200,
                   mesg:'succuss',
                   data:{
-                        img:req.newFilename
+                        img: req.newFilename
                   }
             });
             // res.send('Image uploaded:' + req.newFilename);
