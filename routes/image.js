@@ -2,8 +2,8 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const multer = require('multer');
-// const internal = require('stream');
-// const { Server } = require('http');
+const { log } = require('console');
+const db = require ('../modules/db')
 
 const storage = multer.diskStorage({
       destination: function(req,file,cb){
@@ -11,7 +11,9 @@ const storage = multer.diskStorage({
       },
       filename: function (req, file,cb){
             const ext =path.extname(file.originalname);
-            cb(null, Date.now() + ext);
+            const newFilename = Date.now() + ext;
+            cb(null,newFilename);
+            req.newFilename = newFilename;
       }
 });
 
@@ -31,11 +33,24 @@ app.get('/images/:imageName', (req, res) => {
 });
 app.post('/uploadProfileImage',upload.single('image'), (req,res) =>{
       try{
-            res.send('Image uploaded');
+            const sql = 'UPDATE Econox SET img = ? WHERE id = ?'
+            const params = [req.newFilename, req.body?.id]
+            const result = db.update(sql,params);
+            res.send({
+                  status:200,
+                  mesg:'succuss',
+                  data:{
+                        img:req.newFilename
+                  }
+            });
+            // res.send('Image uploaded:' + req.newFilename);
       } catch(error){
             console.error(error)
             res.status(500).send('internal Server Error');
       }
 });
 
+// app.post('/uploadProfileImage', (req,res) =>{
+//       res.send('hello')
+// })
 module.exports = app;

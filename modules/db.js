@@ -1,15 +1,15 @@
 const mysql = require('mysql')
 
 const connection = mysql.createConnection({
-    host: '5.189.153.72',
-    user: 'jack',
-    password: '123456',
-    database: 'teng',
-    // host: 'localhost',
-    // user: 'root',
+    // host: '5.189.153.72',
+    // user: 'jack',
     // password: '123456',
-    // database: 'Econox',
-    
+    // database: 'teng',
+    host: 'localhost',
+    user: 'root',
+    password: '123456',
+    database: 'Econox',
+    port: '3307'
 
 })
 
