@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  db:
+    container_name: Econox_db
+    image: mariadb:10.6
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+      - 3307:3306
+
+  phpmyadmin:
+    container_name: aif_phpmyadmin
+    image: phpmyadmin:5.2.1
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      PMA_HOST: db
+    depends_on:
+      - db
